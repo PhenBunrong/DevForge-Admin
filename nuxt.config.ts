@@ -5,9 +5,9 @@ export default defineNuxtConfig({
   vuetify: {
     moduleOptions: {
       prefixComposables: true,
-      styles: {
-        colors: false
-      }
+      // styles: {
+      //   colors: false
+      // }
     }
   },
 })
