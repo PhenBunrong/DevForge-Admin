@@ -119,4 +119,7 @@ Backend integration will be added as the project develops.
 
 ## License
 
-This project is currently intended for learning and portfolio development. A license can be added when the project is ready to be shared or reused publicly.
+This project is currently intended for learning and portfolio development.
+
+<img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/028fdad0-99e7-4d1e-aa4a-8d5e53976a64" />
+
