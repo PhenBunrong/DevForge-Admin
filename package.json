@@ -9,18 +9,24 @@
     "lint:fix": "eslint . --fix",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "prepare": "husky"
   },
   "dependencies": {
     "@nuxt/eslint": "1.17.0",
     "eslint": "^9.0.0 || ^10.0.0",
+    "lint-staged": "^17.6.0",
     "nuxt": "^4.5.1",
     "vue": "^3.5.40",
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "vite-plugin-eslint2": "^5.3.0",
     "vuetify": "^4.1.7",
     "vuetify-nuxt-module": "1.0.0-rc.3"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": "eslint --fix"
   }
 }

@@ -11,10 +11,11 @@ export default withNuxt()
       'vue/max-attributes-per-line': 'off',
       'vue/singleline-html-element-content-newline': 'off',
       'vue/no-v-html': 'off',
+      'vue/valid-v-slot': 'off',
     },
   })
-  // .override('nuxt/stylistic', {
-  //   rules: {
-  //     '@stylistic/quote-props': 'off',
-  //   },
-  // })
+  .override('nuxt/stylistic', {
+    rules: {
+      '@stylistic/quote-props': 'off',
+    },
+  })

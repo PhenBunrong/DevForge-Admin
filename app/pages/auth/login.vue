@@ -1,8 +1,8 @@
 <script setup>
-  definePageMeta({
-    title: 'Login',
-    layout: 'auth',
-  })
+definePageMeta({
+  title: 'Login',
+  layout: 'auth',
+})
 </script>
 
 <template>
@@ -18,7 +18,6 @@
           <VImg
             src="https://randomuser.me/api/portraits/women/85.jpg"
             height="64"
-    
           />
           <VCardTitle>Login</VCardTitle>
           <VCardText>

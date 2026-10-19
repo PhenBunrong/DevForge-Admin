@@ -1,34 +1,34 @@
 <script setup lang="ts">
-  const drawer = ref(false);
-  const group = ref(null);
-  const theme = ref('light')
-  const auth = ref(true)
+const drawer = ref(false)
+const group = ref(null)
+const theme = ref('light')
+const auth = ref(true)
 
-  const items = [
-    {
-      title: 'Production',
-      disabled: false,
-      href: 'breadcrumbs_dashboard',
-    },
-    {
-      title: 'Link 1',
-      disabled: false,
-      href: 'breadcrumbs_link_1',
-    },
-    {
-      title: 'Link 2',
-      disabled: true,
-      href: 'breadcrumbs_link_2',
-    },
-  ]
+const items = [
+  {
+    title: 'Production',
+    disabled: false,
+    href: 'breadcrumbs_dashboard',
+  },
+  {
+    title: 'Link 1',
+    disabled: false,
+    href: 'breadcrumbs_link_1',
+  },
+  {
+    title: 'Link 2',
+    disabled: true,
+    href: 'breadcrumbs_link_2',
+  },
+]
 
-  function onClick () {
-    theme.value = theme.value === 'light' ? 'dark' : 'light'
-  }
+function onClick() {
+  theme.value = theme.value === 'light' ? 'dark' : 'light'
+}
 
-  watch(group, () => {
-    drawer.value = false;
-  });
+watch(group, () => {
+  drawer.value = false
+})
 </script>
 
 <template>
@@ -99,7 +99,7 @@
         <VDivider />
         <VBreadcrumbs :items="items" density="compact" class="my-0">
           <template #prepend>
-            <v-icon icon="$vuetify" size="small"/>
+            <v-icon icon="$vuetify" size="small" />
           </template>
         </VBreadcrumbs>
         <VDivider />

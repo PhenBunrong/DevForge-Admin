@@ -1,9 +1,9 @@
 <script setup>
 definePageMeta({
-  layout: "default",
-});
+  layout: 'default',
+})
 </script>
 
 <template>
-    <v-card-text>Inventory</v-card-text>
+  <v-card-text>Inventory</v-card-text>
 </template>
