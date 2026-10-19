@@ -98,8 +98,8 @@
       <VMain>
         <VDivider />
         <VBreadcrumbs :items="items" density="compact" class="my-0">
-          <template v-slot:prepend>
-            <v-icon icon="$vuetify" size="small"></v-icon>
+          <template #prepend>
+            <v-icon icon="$vuetify" size="small"/>
           </template>
         </VBreadcrumbs>
         <VDivider />

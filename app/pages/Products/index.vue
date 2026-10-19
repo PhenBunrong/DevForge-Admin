@@ -72,10 +72,10 @@ const items = [
         </VToolbar>
         <VDivider />
       </template>
-      <template v-slot:header.stock>
+      <template #header.stock>
         <div class="text-end">Stock</div>
       </template>
-      <template v-slot:item.image="{ item }">
+      <template #item.image="{ item }">
         <VCard class="my-2" elevation="1" rounded>
           <VImg
             :src="`https://cdn.vuetifyjs.com/docs/images/graphics/gpus/${item.image}`"
@@ -84,16 +84,16 @@ const items = [
           />
         </VCard>
       </template>
-      <template v-slot:item.rating="{ item }">
+      <template #item.rating="{ item }">
         <v-rating
           :model-value="item.rating"
           color="orange-darken-2"
           density="compact"
           size="small"
           readonly
-        ></v-rating>
+        />
       </template>
-      <template v-slot:item.stock="{ item }">
+      <template #item.stock="{ item }">
         <div class="text-end">
           <v-chip
             :color="item.stock ? 'green' : 'red'"
@@ -102,7 +102,7 @@ const items = [
             size="small"
             variant="elevated"
             elevation="0"
-          ></v-chip>
+          />
         </div>
       </template>
     </VDataTable>
