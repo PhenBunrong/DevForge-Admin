@@ -4,6 +4,7 @@ definePageMeta({
 })
 
 const search = ref('')
+const showProductDialog = ref(false)
 const items = [
   {
     name: 'Nebula GTX 3080',
@@ -11,6 +12,7 @@ const items = [
     price: 699.99,
     rating: 5,
     stock: true,
+    action: true,
   },
   {
     name: 'Galaxy RTX 3080',
@@ -18,6 +20,7 @@ const items = [
     price: 799.99,
     rating: 4,
     stock: false,
+    action: true,
   },
   {
     name: 'Orion RX 6800 XT',
@@ -25,6 +28,7 @@ const items = [
     price: 649.99,
     rating: 3,
     stock: true,
+    action: true,
   },
   {
     name: 'Vortex RTX 3090',
@@ -32,6 +36,7 @@ const items = [
     price: 1499.99,
     rating: 4,
     stock: true,
+    action: true,
   },
   {
     name: 'Cosmos GTX 1660 Super',
@@ -39,6 +44,7 @@ const items = [
     price: 299.99,
     rating: 4,
     stock: false,
+    action: true,
   },
 ]
 </script>
@@ -55,6 +61,7 @@ const items = [
     <template #top>
       <VToolbar color="transparent" class="pr-2">
         <!-- <VToolbarTitle>Production</VToolbarTitle> -->
+        <ProductFormDialog v-model="showProductDialog" />
         <VTextField
           v-model="search"
           density="compact"
@@ -66,7 +73,13 @@ const items = [
           max-width="300"
         />
         <VSpacer />
-        <VBtn color="primary" prepend-icon="mdi-alarm-light" variant="outlined" height="40">
+        <VBtn
+          color="primary"
+          prepend-icon="mdi-alarm-light"
+          variant="outlined"
+          height="40"
+          @click="showProductDialog = true"
+        >
           Add For Production
         </VBtn>
       </VToolbar>
@@ -104,6 +117,14 @@ const items = [
           elevation="0"
         />
       </div>
+    </template>
+    <template #item.action>
+      <v-btn variant="text" icon color="primary">
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn variant="text" icon color="red">
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
     </template>
   </VDataTable>
 </template>
