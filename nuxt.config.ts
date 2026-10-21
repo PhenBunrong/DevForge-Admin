@@ -3,7 +3,9 @@ export default defineNuxtConfig({
     'vuetify-nuxt-module',
     '@nuxt/eslint',
   ],
+  ssr: false,
   devtools: { enabled: true },
+  css: ['~/assets/scss/app.scss'],
   compatibilityDate: '2025-07-15',
   eslint: {
     checker: true,

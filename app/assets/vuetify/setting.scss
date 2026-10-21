@@ -1,0 +1,5 @@
+$body-font-family: 'Noto Sans Khmer', sans-serif !important;
+
+@forward 'vuetify/settings' with (
+  $body-font-family: $body-font-family,
+);
