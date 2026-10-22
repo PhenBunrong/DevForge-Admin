@@ -121,5 +121,8 @@ Backend integration will be added as the project develops.
 
 This project is currently intended for learning and portfolio development.
 
-![alt text](image.png)
+<img width="1917" height="922" alt="image" src="https://github.com/user-attachments/assets/95b89179-1c91-4b8a-b577-6695542572fe" />
+
+<img width="1918" height="922" alt="image" src="https://github.com/user-attachments/assets/72cf96e2-b159-4daf-a365-3f0c161a9145" />
+
 
