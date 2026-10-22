@@ -1,0 +1,349 @@
+// ============================================================
+// Tokens
+// ============================================================
+:root {
+  --glass-tint: 19, 84, 122;
+  --glass-accent: 128, 208, 199;
+  --glass-shadow: 0, 20, 40;
+  --glass-blur: 28px;
+  --glass-radius: 28px;
+  --glass-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+// ============================================================
+// Mixins
+// ============================================================
+@mixin glass-surface($tint-alpha: 0.18, $blur: var(--glass-blur)) {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06) 45%, rgba(255, 255, 255, 0.14)),
+    rgba(var(--glass-tint), $tint-alpha) !important;
+  backdrop-filter: blur($blur) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur($blur) saturate(180%) brightness(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.55),
+    inset -1px -1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 40px rgba(255, 255, 255, 0.06),
+    0 20px 60px rgba(var(--glass-shadow), 0.35);
+
+  // Reduced transparency lives here, so every glass surface gets it
+  // with the same specificity as its own rule.
+  @media (prefers-reduced-transparency: reduce) {
+    background: rgba(var(--glass-tint), 0.94) !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+// Pass $position: null for elements that are already positioned by Vuetify
+// (drawers), otherwise their layout breaks.
+@mixin glass-sheen($position: relative) {
+  isolation: isolate;
+  position: $position;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1; // above the glass background, below the content
+    mix-blend-mode: soft-light;
+    background:
+      radial-gradient(120% 60% at 0% 0%, rgba(255, 255, 255, 0.3), transparent 55%),
+      radial-gradient(80% 50% at 100% 100%, rgba(var(--glass-accent), 0.22), transparent 60%);
+  }
+}
+
+// Controls sit on top of glass surfaces, so they get no blur of their own.
+@mixin glass-control {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition:
+    transform 0.35s var(--glass-spring),
+    background 0.25s ease,
+    box-shadow 0.3s ease;
+
+  &:not(:disabled):not(.v-btn--disabled) {
+    &:hover  { background: rgba(255, 255, 255, 0.24); transform: scale(1.05); }
+    &:active { transform: scale(0.96); }
+  }
+}
+
+// ============================================================
+// Opt-in utility: class="glass" on cards, panels, breadcrumbs
+// ============================================================
+.glass {
+  @include glass-surface;
+  @include glass-sheen;
+  border-radius: var(--glass-radius);
+}
+
+// ============================================================
+// Overlays
+// ============================================================
+.v-overlay { --v-overlay-opacity: 0.35; }              // keeps Vuetify's fade animation
+.v-overlay__scrim { background: rgb(10, 30, 45) !important; }
+
+.v-dialog > .v-overlay__content > .v-card,
+.v-menu > .v-overlay__content > .v-sheet,
+.v-menu > .v-overlay__content > .v-card,
+.v-menu > .v-overlay__content > .v-list {
+  @include glass-surface(0.22, 24px);
+  @include glass-sheen;
+  border-radius: var(--glass-radius);
+  overflow: hidden;
+}
+
+// ============================================================
+// Navigation drawers
+// ============================================================
+// Permanent: the drawer is invisible, its content is the floating glass panel.
+.v-navigation-drawer:not(.v-navigation-drawer--temporary) {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important; // otherwise the panel's shadow is clipped
+  transition: width 0.45s var(--glass-spring), transform 0.3s ease !important;
+
+  .v-navigation-drawer__content {
+    @include glass-surface(0.14, 24px);
+    @include glass-sheen;
+    margin: 12px;
+    height: calc(100% - 24px);
+    border-radius: var(--glass-radius);
+    overflow-x: hidden;
+  }
+
+  .v-list { background: transparent; }
+}
+
+// Temporary (right-side forms): attached glass pane.
+.v-navigation-drawer--temporary {
+  @include glass-surface;
+  @include glass-sheen(null);
+
+  &.v-navigation-drawer--right {
+    border-width: 1px 0 1px 1px;
+    border-radius: var(--glass-radius) 0 0 var(--glass-radius);
+  }
+  &.v-navigation-drawer--left {
+    border-width: 1px 1px 1px 0;
+    border-radius: 0 var(--glass-radius) var(--glass-radius) 0;
+  }
+}
+
+// ============================================================
+// Floating pill app bar
+// ============================================================
+.v-app-bar.v-toolbar {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  overflow: visible !important; // toolbar clips by default, which cuts the shadow
+
+  .v-toolbar__content {
+    @include glass-surface(0.14, 20px);
+    height: 56px !important;
+    width: calc(100% - 24px); // Vuetify sets width: 100%, margins would overflow
+    margin: 12px 12px 0;
+    padding-inline: 8px;
+    border-radius: 999px;
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.55),
+      inset -1px -1px 0 rgba(255, 255, 255, 0.12),
+      0 10px 30px rgba(var(--glass-shadow), 0.25);
+  }
+}
+
+// ============================================================
+// Lists / nav items
+// ============================================================
+.v-list-item {
+  transition: background 0.25s ease, transform 0.35s var(--glass-spring);
+  &:hover { transform: translateX(2px); }
+}
+
+.v-list-item--active {
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 4px 14px rgba(var(--glass-shadow), 0.18);
+
+  .v-list-item__overlay { opacity: 0 !important; }
+}
+
+// ============================================================
+// Fields (ring is an inset shadow, so fields don't grow by 2px)
+// ============================================================
+.v-field {
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -8px 16px rgba(0, 0, 0, 0.06);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+
+  .v-field__overlay { display: none; }
+
+  &:hover { background: rgba(255, 255, 255, 0.18) !important; }
+
+  &.v-field--focused {
+    background: rgba(255, 255, 255, 0.24) !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      0 0 0 4px rgba(255, 255, 255, 0.12);
+  }
+}
+
+// ============================================================
+// Buttons
+// ============================================================
+.v-btn:not(.v-btn--variant-text):not(.v-btn--variant-plain) {
+  @include glass-control;
+
+  &.bg-primary {
+    background: linear-gradient(
+      135deg,
+      rgba(var(--v-theme-primary), 0.65),
+      rgba(var(--glass-tint), 0.55)
+    ) !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    font-weight: 600;
+  }
+}
+
+.v-btn--variant-text {
+  transition: transform 0.35s var(--glass-spring), background 0.25s ease;
+
+  &:not(:disabled):not(.v-btn--disabled) {
+    &:hover  { transform: scale(1.05); }
+    &:active { transform: scale(0.96); }
+  }
+}
+
+// ============================================================
+// Data tables
+// ============================================================
+.products-panel {
+  overflow: hidden;
+  padding: 4px;
+}
+
+.v-data-table {
+  background: transparent !important;
+
+  .v-data-table__thead th {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(var(--v-theme-on-surface), 0.8) !important; // not opacity, which fades the sticky bg too
+  }
+
+  .v-data-table__tr {
+    transition: background 0.25s ease;
+
+    td { border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important; }
+    &:hover td { background: rgba(255, 255, 255, 0.1) !important; }
+  }
+
+  .v-data-table-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+  }
+}
+
+.thumb {
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 6px 16px rgba(var(--glass-shadow), 0.25);
+  transition: transform 0.35s var(--glass-spring);
+
+  .v-data-table__tr:hover & { transform: scale(1.04); }
+}
+
+.glass-chip {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+}
+
+// ============================================================
+// Page transition (NuxtPage :transition="{ name: 'page', mode: 'out-in' }")
+// ============================================================
+.page-enter-active,
+.page-leave-active { transition: opacity 0.25s ease, transform 0.35s var(--glass-spring); }
+.page-enter-from   { opacity: 0; transform: translateY(8px) scale(0.99); }
+.page-leave-to     { opacity: 0; transform: translateY(-4px); }
+
+// ============================================================
+// Light theme: white glass, softer shadows
+// ============================================================
+.v-theme--light {
+  --glass-tint: 255, 255, 255;
+  --glass-shadow: 40, 60, 90;
+
+  .v-field { background: rgba(255, 255, 255, 0.5) !important; }
+  .v-data-table .v-data-table__tr:hover td { background: rgba(255, 255, 255, 0.35) !important; }
+}
+
+// ============================================================
+// Reduced motion
+// ============================================================
+@media (prefers-reduced-motion: reduce) {
+  .v-btn,
+  .v-field,
+  .v-list-item,
+  .thumb,
+  .v-navigation-drawer,
+  .page-enter-active,
+  .page-leave-active {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+.v-data-table > .v-table__wrapper > table > thead > tr > th {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)),
+    rgba(var(--glass-tint), 0.4) !important;
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  color: rgba(var(--v-theme-on-surface), 0.85) !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// calmer corner highlight on the table panel only
+.products-panel::before { opacity: 0.45; }
+
+.v-navigation-drawer--temporary {
+  @include glass-surface;
+  @include glass-sheen(null);
+
+  // Cover the full viewport height, above the app bar and the sidebar
+  top: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  z-index: 2400 !important; // Vuetify's overlay layer is 2000+
+
+  &.v-navigation-drawer--right {
+    border-width: 1px 0 1px 1px;
+    border-radius: var(--glass-radius) 0 0 var(--glass-radius);
+  }
+  &.v-navigation-drawer--left {
+    border-width: 1px 1px 1px 0;
+    border-radius: 0 var(--glass-radius) var(--glass-radius) 0;
+  }
+}

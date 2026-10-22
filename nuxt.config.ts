@@ -20,5 +20,16 @@ export default defineNuxtConfig({
       //   colors: false
       // }
     },
+    vuetifyOptions: {
+      theme: { defaultTheme: 'dark' },
+      defaults: {
+        VTextField: { variant: 'solo', flat: true, rounded: 'xl' },
+        VTextarea: { variant: 'solo', flat: true, rounded: 'xl' },
+        VSelect: { variant: 'solo', flat: true, rounded: 'xl' },
+        VBtn: { rounded: 'pill' },
+        VSwitch: { inset: true, hideDetails: true },
+        VNavigationDrawer: { color: 'transparent', scrim: false },
+      },
+    },
   },
 })

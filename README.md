@@ -25,7 +25,7 @@ You can also use npm, pnpm, or Yarn.
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone <repository-url>
 cd DevForge-Admin
 ```
 
@@ -121,5 +121,5 @@ Backend integration will be added as the project develops.
 
 This project is currently intended for learning and portfolio development.
 
-<img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/028fdad0-99e7-4d1e-aa4a-8d5e53976a64" />
+![alt text](image.png)
 
