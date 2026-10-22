@@ -43,14 +43,14 @@ const currency = new Intl.NumberFormat('en-US', { style: 'currency', currency: '
         :headers="headers"
         :items="items"
         :filter-keys="['name']"
-        height="calc(100vh - 299px)"
+        height="calc(100vh - 294px)"
         fixed-header
         hover
         class="bg-transparent"
         :header-props="{ class: 'glass-th' }"
       >
         <template #top>
-          <VToolbar color="transparent" class="px-2">
+          <VToolbar color="transparent">
             <VTextField
               v-model="search"
               class="ms-2"

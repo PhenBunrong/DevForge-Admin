@@ -79,7 +79,7 @@ onMounted(() => setTimeout(() => (isPageLoading.value = false), 1500))
       </VAppBar>
     </template>
     <VMain>
-      <VContainer fluid class="h-100">
+      <VContainer fluid class="h-100 px-3 pb-1">
         <VSkeletonLoader
           v-if="isPageLoading"
           type="text"
@@ -90,7 +90,7 @@ onMounted(() => setTimeout(() => (isPageLoading.value = false), 1500))
           v-else
           :items="crumbs"
           density="compact"
-          class="glass rounded-pill d-inline-flex w-auto px-4 mt-0 mb-4"
+          class="rounded-pill d-inline-flex w-auto px-4 mt-2 mb-4"
         >
           <template #prepend>
             <VIcon icon="$vuetify" size="small" />

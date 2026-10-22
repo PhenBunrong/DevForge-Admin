@@ -347,3 +347,58 @@
     border-radius: 0 var(--glass-radius) var(--glass-radius) 0;
   }
 }
+
+// ============================================================
+// Shared background layer: class="glass-bg" on any full-page wrapper
+// ============================================================
+.glass-bg {
+  position: relative;
+  isolation: isolate;
+  background: rgb(var(--v-theme-background));
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(60% 50% at 15% 20%, rgba(128, 208, 199, 0.55), transparent 70%),
+      radial-gradient(55% 45% at 85% 75%, rgba(19, 84, 122, 0.65), transparent 70%),
+      radial-gradient(40% 40% at 70% 15%, rgba(255, 170, 120, 0.3), transparent 70%),
+      linear-gradient(rgba(8, 24, 38, 0.35), rgba(8, 24, 38, 0.35)),
+      url('https://picsum.photos/id/1018/1920/1080') center / cover no-repeat; // local file in public/
+    background-size: 140% 140%, 140% 140%, 140% 140%, auto, cover;
+    animation: glass-drift 40s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes glass-drift {
+  to { background-position: 100% 60%, 0% 40%, 40% 100%, 0 0, center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-bg::before { animation: none; }
+}
+
+// ============================================================
+// Autofill: remove the browser's solid background
+// ============================================================
+.v-field input,
+.v-field textarea {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    // Chrome ignores background overrides, so push its transition out of reach
+    transition: background-color 600000s 0s, color 600000s 0s !important;
+    // Chrome also forces its own text color, so set it explicitly
+    -webkit-text-fill-color: rgb(var(--v-theme-on-surface)) !important;
+    caret-color: rgb(var(--v-theme-on-surface));
+  }
+
+  // Firefox and Safari
+  &:autofill {
+    background: transparent !important;
+    -webkit-text-fill-color: rgb(var(--v-theme-on-surface)) !important;
+  }
+}
