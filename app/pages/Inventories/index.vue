@@ -1,5 +1,7 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
+  title: 'Inventory',
+  middleware: ['sanctum:auth'],
   layout: 'default',
 })
 </script>
