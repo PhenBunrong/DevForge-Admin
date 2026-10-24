@@ -1,36 +1,32 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'Login',
+  middleware: ['sanctum:guest'],
   layout: 'auth',
 })
 
-const email = ref('')
-const password = ref('')
+useHead({
+  title: 'Login',
+})
+
+const { login } = useSanctumAuth()
+
 const showPassword = ref(false)
 const remember = ref(true)
 const loading = ref(false)
 const error = ref('')
+const user = ref({
+  email: 'rong-dev@gmail.com',
+  password: '12345678',
+})
 
-const rules = {
-  email: [
-    (v: string) => !!v || 'Email is required',
-    (v: string) => /.+@.+\..+/.test(v) || 'Enter a valid email',
-  ],
-  password: [
-    (v: string) => !!v || 'Password is required',
-    (v: string) => v.length >= 8 || 'At least 8 characters',
-  ],
-}
-
-async function onSubmit(event: Promise<{ valid: boolean }>) {
-  const { valid } = await event
-  if (!valid) return
-
+async function onSubmit() {
   loading.value = true
+
   error.value = ''
   try {
-    // await $fetch('/api/auth/login', { method: 'POST', body: { email: email.value, password: password.value, remember: remember.value } })
-    await navigateTo('/products')
+    await useSanctumFetch('/sanctum/csrf-cookie')
+    await login(user.value)
   }
   catch {
     error.value = 'Incorrect email or password.'
@@ -64,10 +60,8 @@ async function onSubmit(event: Promise<{ valid: boolean }>) {
           closable
           @click:close="error = ''"
         />
-
         <VTextField
-          v-model="email"
-          :rules="rules.email"
+          v-model="user.email"
           label="Email"
           type="email"
           name="email"
@@ -75,10 +69,8 @@ async function onSubmit(event: Promise<{ valid: boolean }>) {
           prepend-inner-icon="mdi-email-outline"
           class="mb-1"
         />
-
         <VTextField
-          v-model="password"
-          :rules="rules.password"
+          v-model="user.password"
           :type="showPassword ? 'text' : 'password'"
           :append-inner-icon="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
           label="Password"
@@ -87,14 +79,12 @@ async function onSubmit(event: Promise<{ valid: boolean }>) {
           prepend-inner-icon="mdi-lock-outline"
           @click:append-inner="showPassword = !showPassword"
         />
-
         <div class="d-flex align-center justify-space-between mb-4">
           <VCheckbox v-model="remember" label="Remember me" density="compact" hide-details />
           <NuxtLink to="/forgot-password" class="text-body-2 text-decoration-none">
             Forgot password?
           </NuxtLink>
         </div>
-
         <VBtn
           :loading="loading"
           color="primary"

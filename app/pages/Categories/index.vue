@@ -1,5 +1,7 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
+  title: 'Categories',
+  middleware: ['sanctum:auth'],
   layout: 'default',
 })
 </script>

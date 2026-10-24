@@ -1,6 +1,7 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
-  layout: 'default',
+  title: 'Dashboard',
+  middleware: ['sanctum:auth'],
 })
 </script>
 
