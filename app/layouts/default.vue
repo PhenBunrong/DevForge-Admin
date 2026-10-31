@@ -7,9 +7,11 @@ const isPageLoading = ref(true) // swap for useLoadingIndicator().isLoading in r
 
 const navItems = [
   { title: 'Dashboard', icon: 'mdi-package-variant', to: '/dashboard' },
-  { title: 'Products', icon: 'mdi-package-variant', to: '/products' },
-  { title: 'Categories', icon: 'mdi-shape', to: '/categories' },
-  { title: 'Inventory', icon: 'mdi-warehouse', to: '/inventories' },
+  { title: 'Product', icon: 'mdi-package-variant', to: '/products' },
+  { title: 'Category', icon: 'mdi-shape', to: '/categories' },
+  { title: 'Inventory', icon: 'mdi-invoice-list', to: '/inventories' },
+  { title: 'User', icon: 'mdi-account-group', to: '/users' },
+  { title: 'Test', icon: 'mdi-french-fries', to: '/test' },
 ]
 
 const crumbs = [

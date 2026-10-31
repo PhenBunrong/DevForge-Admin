@@ -1,7 +1,7 @@
 import process from 'node:process'
 
 export default defineNuxtConfig({
-  modules: ['vuetify-nuxt-module', '@nuxt/eslint', 'nuxt-auth-sanctum'],
+  modules: ['vuetify-nuxt-module', '@nuxt/eslint', 'nuxt-auth-sanctum', '@pinia/nuxt', '@vueuse/nuxt/module'],
   ssr: false,
   devtools: { enabled: true },
   css: ['~/assets/scss/app.scss'],
