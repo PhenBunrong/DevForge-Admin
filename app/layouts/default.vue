@@ -9,9 +9,9 @@ const navItems = [
   { title: 'Dashboard', icon: 'mdi-package-variant', to: '/dashboard' },
   { title: 'Product', icon: 'mdi-package-variant', to: '/products' },
   { title: 'Category', icon: 'mdi-shape', to: '/categories' },
-  { title: 'Inventory', icon: 'mdi-warehouse', to: '/inventories' },
-  { title: 'User', icon: 'mdi-warehouse', to: '/users' },
-  { title: 'Test', icon: 'mdi-warehouse', to: '/test' },
+  { title: 'Inventory', icon: 'mdi-invoice-list', to: '/inventories' },
+  { title: 'User', icon: 'mdi-account-group', to: '/users' },
+  { title: 'Test', icon: 'mdi-french-fries', to: '/test' },
 ]
 
 const crumbs = [
